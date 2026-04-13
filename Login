@@ -1,8 +1,5 @@
 package com.mycompany.chatapppoe;
 
-/**
- * Login class verifies credentials against stored registration data.
- */
 public class Login {
     private String storedUsername;
     private String storedPassword;
