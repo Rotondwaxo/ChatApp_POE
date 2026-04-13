@@ -1,11 +1,5 @@
 package com.mycompany.chatapppoe;
 
-/**
- * Registration class handles user registration, validation of username,
- * password, and South African cell phone number.
- * References:
- * - Cell phone regex: ^\\+27[0-9]{9}$ (South Africa international format)
- */
 public class Registration {
     private String firstName;
     private String lastName;
