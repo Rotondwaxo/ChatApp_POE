@@ -1,0 +1,55 @@
+package com.mycompany.chatapppoe;
+
+import java.util.Scanner;
+
+public class ChatApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("========================================");
+        System.out.println("       WELCOME TO CHAT APP SETUP        ");
+        System.out.println("========================================\n");
+        
+        // Registration phase
+        System.out.println("--- REGISTRATION ---");
+        System.out.print("Enter first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Enter username (must contain '_' and ≤5 chars): ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password (≥8 chars, 1 capital, 1 digit, 1 special): ");
+        String password = scanner.nextLine();
+        System.out.print("Enter South African cell number (e.g., +27838968976): ");
+        String phone = scanner.nextLine();
+        
+        Registration reg = new Registration(firstName, lastName, username, password, phone);
+        
+        // Display validation messages
+        System.out.println("\n" + reg.getUsernameStatusMessage());
+        System.out.println(reg.getPasswordStatusMessage());
+        System.out.println(reg.getCellPhoneStatusMessage());
+        
+        if (!reg.isRegistrationValid()) {
+            System.out.println("\nRegistration failed. Please restart the application.");
+            scanner.close();
+            return;
+        }
+        
+        System.out.println("\nRegistration successful!\n");
+        
+        // Login phase
+        System.out.println("--- LOGIN ---");
+        System.out.print("Enter username: ");
+        String loginUser = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String loginPass = scanner.nextLine();
+        
+        Login login = new Login(reg.getUsername(), reg.getPassword());
+        boolean loginSuccess = login.loginUser(loginUser, loginPass);
+        String loginMessage = login.returnLoginStatus(loginSuccess, reg.getFirstName(), reg.getLastName());
+        System.out.println("\n" + loginMessage);
+        
+        scanner.close();
+    }
+}
