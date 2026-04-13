@@ -1,0 +1,86 @@
+package com.mycompany.chatapppoe;
+
+/**
+ * Registration class handles user registration, validation of username,
+ * password, and South African cell phone number.
+ * References:
+ * - Cell phone regex: ^\\+27[0-9]{9}$ (South Africa international format)
+ */
+public class Registration {
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
+    private String cellPhone;
+    
+    private boolean isUsernameValid;
+    private boolean isPasswordValid;
+    private boolean isCellPhoneValid;
+    
+    // Constructor performs all validations immediately
+    public Registration(String firstName, String lastName, String username, 
+                        String password, String cellPhone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.cellPhone = cellPhone;
+        
+        this.isUsernameValid = checkUserName();
+        this.isPasswordValid = checkPasswordComplexity();
+        this.isCellPhoneValid = checkCellPhoneNumber();
+    }
+    
+    // Validation methods
+    public boolean checkUserName() {
+        return username != null && username.contains("_") && username.length() <= 5;
+    }
+    
+    public boolean checkPasswordComplexity() {
+        if (password == null) return false;
+        // At least 8 chars, one capital, one digit, one special character
+        String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
+        return password.matches(regex);
+    }
+    
+    public boolean checkCellPhoneNumber() {
+        // South African format: +27 followed by exactly 9 digits
+        return cellPhone != null && cellPhone.matches("^\\+27[0-9]{9}$");
+    }
+    
+    // Status messages for registration
+    public String getUsernameStatusMessage() {
+        if (isUsernameValid) {
+            return "Username successfully captured.";
+        } else {
+            return "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";
+        }
+    }
+    
+    public String getPasswordStatusMessage() {
+        if (isPasswordValid) {
+            return "Password successfully captured.";
+        } else {
+            return "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
+        }
+    }
+    
+    public String getCellPhoneStatusMessage() {
+        if (isCellPhoneValid) {
+            return "Cell phone number successfully added.";
+        } else {
+            return "Cell phone number incorrectly formatted or does not contain international code.";
+        }
+    }
+    
+    // Getters for Login class
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    
+    // Check if all fields are valid (for overall registration success)
+    public boolean isRegistrationValid() {
+        return isUsernameValid && isPasswordValid && isCellPhoneValid;
+    }
+}
